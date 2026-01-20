@@ -2,6 +2,7 @@ import streamlit as st
 import sqlite3
 import time
 
+
 # --- IMPORT YOUR MAIN PROJECT ---
 import Main
 
@@ -18,7 +19,10 @@ st.set_page_config(
 # -----------------------------------------------------------------------------
 # 2. DATABASE LOGIC
 # -----------------------------------------------------------------------------
-DB_PATH = "data/forensic.db"
+import os
+
+DB_PATH = os.path.join("/tmp", "forensic.db")
+
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)

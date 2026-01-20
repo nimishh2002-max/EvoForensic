@@ -1,0 +1,33 @@
+# Python / Streamlit Artifacts
+__pycache__/
+*.pyc
+.streamlit/
+
+# Database (Do not upload real forensic data)
+*.db
+forensic.db
+
+# Virtual Environments
+venv/
+env/
+.env
+
+# Large AI Models (Download these locally instead)
+saved_models/*.pkl
+*.pt
+*.ckpt
+*.safetensors
+huggingface/
+
+# IDE Settings
+.vscode/
+.idea/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Output Images
+outputs/
+*.png
+*.jpg

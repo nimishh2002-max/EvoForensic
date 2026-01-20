@@ -1,0 +1,6 @@
+08:47  → Phishing email received (Email Header)
+09:01  → User logs into company email (Browser History)
+09:05  → User accesses Pastebin (Browser History)
+09:12  → Successful API login (Server Log)
+09:15  → External IP attempts SSH brute force (Firewall)
+09:17  → Unauthorized file access attempt (Server Log)

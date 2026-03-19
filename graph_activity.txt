@@ -8,3 +8,4 @@ Curve injection: 2026-03-10T10:00:00
 Curve injection: 2026-03-11T14:30:00
 Curve injection: 2026-03-17T09:15:00
 Curve injection: 2026-03-18T11:00:00
+Curve injection: 2026-03-19T15:45:00

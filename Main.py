@@ -1,15 +1,26 @@
 import streamlit as st
+import sys
+import os
 
-# Import the independent operation modes
-from modules import ForensicMode, ResearchMode, DigitalTimelineMode
+# --- PATH SETUP ---
+# Ensures we can import from 'ui' and 'modules'
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+# --- IMPORT NEW UI MODULES ---
+try:
+    # We now import DashboardUI alongside the others
+    from ui import DashboardUI, ForensicUI, ResearchUI, TimelineUI
+except ImportError as e:
+    st.error(f"CRITICAL ERROR: UI Modules Missing. Please check your 'ui/' folder. Details: {e}")
+    st.stop()
 
 def main():
-    st.sidebar.title("🧬 Sherlock-AI")
+    # --- SIDEBAR SETUP ---
+    st.sidebar.title("🧬 EvoForensic")
     st.sidebar.caption("Forensic Intelligence Suite")
     st.sidebar.markdown("---")
     
-    # NAVIGATION HUB
-    # 1. Added "Dashboard" as the default (first) option
+    # NAVIGATION
     mode = st.sidebar.radio(
         "Select Module:", 
         [
@@ -21,33 +32,23 @@ def main():
     )
     
     st.sidebar.markdown("---")
-    st.sidebar.info(
-        "**System Status:** 🟢 ONLINE\n\n"
-        "**Encryption:** AES-256 Ready\n\n"
-        "**AI Model:** Llama 3.2 (Local)"
-    )
-    
-    # ROUTING LOGIC
+   
+    # --- ROUTING LOGIC ---
     if "Dashboard" in mode:
-        st.markdown("# 🕵️‍♂️ Sherlock-AI Dashboard")
-        st.markdown("""
-        ### Welcome, Investigator.
-        
-        You have successfully authenticated into the secure Forensic Intelligence System.
-        
-        **Select a module from the sidebar to begin:**
-        
-        * **🧬 Forensic Mode:** Analyze DNA sequences and decrypt physical evidence.
-        * **📄 Research Mode:** Process case files (PDFs) using RAG AI.
-        * **🕰️ Digital Timeline:** Correlate server logs and cyber events.
-        """)
+        # Launches the terrifying Crime Dashboard
+        DashboardUI.show_dashboard_ui()
         
     elif "Forensic" in mode:
-        ForensicMode.show_forensic_mode()
+        # Launches Pink/Cyan Glass UI
+        ForensicUI.show_forensic_ui()
+        
     elif "Research" in mode:
-        ResearchMode.show_research_mode()
+        # Launches Terror/Hacking UI
+        ResearchUI.show_research_ui()
+        
     elif "Digital Timeline" in mode:
-        DigitalTimelineMode.show_timeline_mode()
+        # Launches Cyber/Blood UI
+        TimelineUI.show_timeline_ui()
 
-# Note: No 'if __name__ == "__main__":' needed. 
-# This is called by ui.py
+if __name__ == "__main__":
+    main()

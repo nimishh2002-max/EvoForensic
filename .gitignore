@@ -1,33 +1,18 @@
-# Python / Streamlit Artifacts
+# Exclude Python Cache
 __pycache__/
-*.pyc
-.streamlit/
-
-# Database (Do not upload real forensic data)
-*.db
-forensic.db
-
-# Virtual Environments
-venv/
-env/
-.env
-
-# Large AI Models (Download these locally instead)
-saved_models/*.pkl
-*.pt
-*.ckpt
-*.safetensors
-huggingface/
-
-# IDE Settings
+.ipynb_checkpoints/
 .vscode/
-.idea/
 
-# OS Files
-.DS_Store
-Thumbs.db
+# Exclude Vector Databases and Pickles
+*.pkl
+*.sqlite3
+chroma.sqlite3
 
-# Output Images
+# Exclude Raw Data and Evidence
+Documents/
+data/
+
+# Exclude System Generated Outputs
 outputs/
-*.png
-*.jpg
+*.pdf
+*.html
